@@ -6,46 +6,66 @@ import { Component } from 'react';
 
 
 
-
+const style = {fontSize: "50px", padding: "15px 30px"};
 class Counter extends Component{
 
+  
   constructor(){
-  super(); // call super first to avoid errors
-  //this that state is where are states will be placed 
-  //I think of states like javascript variables. 
+  super(); 
     this.state = {
       counter: 0
     }
 
-    //You change a state with a function without binding it 
-    //bind it with this.functionName = this.functionName.bind(this)
-    //Now in order to set state you need the .setstate({}) function below
+ 
     this.increment = this.increment.bind(this); 
+    this.decrement = this.decrement.bind(this);
+    this.reset = this.reset.bind(this); 
   }
 
   render(){
     return(
       <div className={styles.Counter} data-testid="Counter">
-    <CounterButton by= {1}></CounterButton>
-      <CounterButton by= {5}></CounterButton>
-      <CounterButton by= {100}></CounterButton>
-      <CounterButton by= {500}></CounterButton>
+      <CounterButton by= {1} incrementMethod={this.increment} decrementMethod={this.decrement}></CounterButton>
+      <CounterButton by= {5} incrementMethod={this.increment} decrementMethod={this.decrement}></CounterButton>
+      <CounterButton by= {100} incrementMethod={this.increment} decrementMethod={this.decrement}></CounterButton>
+      <CounterButton by= {500} incrementMethod={this.increment} decrementMethod={this.decrement}></CounterButton> 
+      <span 
+    style={style}>{this.state.counter}</span>
+   <div><button className={styles.red} onClick={this.reset}>Reset</button></div> 
 
-      
   </div>
+  
     )
   }
 
 
-  //this is a function in a class component
-//there is no function keyword before
-increment() {
-  //this.setState helps you mutate the state without any problems
-  //It converts whatever state you have into a new state
-  this.setState({
-    //a little warning to myself for some reason ++ incrementation 
-    //doesn't work just use +1
-    counter: this.state.counter  //this.props.by
+//give it by a property to use as a parameter and use it 
+increment(by) {
+
+  //console.log(`increment from parent + ${by}`);
+  this.setState((previousState) => {
+   
+    return {counter: previousState.counter  + by}
+  });
+  
+}
+decrement(by) {
+
+ 
+  this.setState((previousState) => {
+   
+    return {counter: previousState.counter  - by}
+  });
+
+ 
+}
+
+reset() {
+
+ 
+  this.setState((previousState) => {
+   
+    return {counter: previousState.counter  = 0}
   });
 }
 }

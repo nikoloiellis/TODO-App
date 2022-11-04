@@ -9,7 +9,7 @@ import styles from './counterButton.module.css';
 
 //style is done within an object and is camelCased in react
 //However this is just for inline styling in most cases we dont do that
-const style = {fontSize: "50px", padding: "15px 30px"};
+// const style = {fontSize: "50px", padding: "15px 30px"};
 class CounterButton extends Component {
 
   //Using a constructor you can handle things like state 
@@ -25,6 +25,7 @@ class CounterButton extends Component {
     //bind it with this.functionName = this.functionName.bind(this)
     //Now in order to set state you need the .setstate({}) function below
     this.increment = this.increment.bind(this); 
+    this.decrement = this.decrement.bind(this);
   }
   
 render(){
@@ -33,9 +34,9 @@ render(){
   <div className={styles.CounterButton} data-testid="Counter">
   
     <button onClick={this.increment}> +{this.props.by} </button>
+    <button onClick={this.decrement}> -{this.props.by} </button>
 
-    <span 
-    style={style}>{this.state.counter}</span>
+ 
   </div>
 
   
@@ -52,7 +53,19 @@ render(){
         //doesn't work just use +1
         counter: this.state.counter + this.props.by
       });
+      //get the increment method from the parent class
+      this.props.incrementMethod(this.props.by);
+    
   } 
+  decrement() {
+   
+   this.setState({
+   
+    counter: this.state.counter + this.props.by
+  });
+    this.props.decrementMethod(this.props.by)
+    
+  }
 
 
 }
