@@ -3,6 +3,7 @@ import './App.css';
 import { Component } from 'react';
 
 import Counter from './components/counter/counter';
+import TodoApp from './components/TodoApp/TodoApp';
 
 class App extends Component{
   render(){
@@ -12,7 +13,11 @@ class App extends Component{
       <FirstComponent></FirstComponent>
       <SecondComponent></SecondComponent> */}
      
-     <Counter></Counter>
+     {/* <Counter></Counter> */}
+
+     <TodoApp></TodoApp> 
+
+
     </div>
 
     
