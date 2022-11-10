@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styles from './Login.module.css';
+import AuthenticationService from '../TodoApp/AuthenticationService';
 
 class Login extends Component{
 
@@ -61,6 +62,8 @@ class Login extends Component{
 
     if(this.state.username === 'Work' && this.state.password === 'test')
     {
+      AuthenticationService. registerSuccessfulLogin(this.state.username, this.state.password);      //This is for routing if its successful
+      this.props.navigate(`/welcome/${this.state.username}`);
       this.setState({
         showSuccessMessage:true,
         hasLoginFailed: false
@@ -76,7 +79,10 @@ class Login extends Component{
 
   render() {return (
   <div className={styles.Login} data-testid="Login">
-    <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}></ShowInvalidCredentials>
+    {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}></ShowInvalidCredentials> */}
+    {/*If statements in jsx are a bit odd this is basically saying if hasloginfailed also show Invalid credentals instead of
+    if haslogin failed and invalid credentials is shown. && works as a block of code rather than and AND  */}
+    {this.state.hasLoginFailed && <div> Invalid Credentials </div> }
     <ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}></ShowLoginSuccessMessage>
     User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
     Password: <input type="password" name="password"  value={this.state.password} onChange={this.handleChange}/>
