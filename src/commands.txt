@@ -1,1 +1,1 @@
-Generate component - npx generate-react-cli component MyComponent
+ npx generate-react-cli component MyComponent

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import TODODataService from '../../api/TODODataService'; 
+import AuthenticationService from '../TodoApp/AuthenticationService';
 import styles from './ListToDOesComponent.module.css';
 
 
@@ -10,14 +11,22 @@ class ListToDOesComponent extends Component{
     this.state= {
 
       //turning state into an array with objects inside of it 
-      todo: [
-        {id:1, description: 'Learn React', done:false, targetDate: new Date()},
-        {id:2, description: 'Learn Spring Framework',done:false, targetDate: new Date()},
-        {id:3, description: 'Learn Angular', done:false, targetDate: new Date()}
-      
-    ]
+      todo: [],
+      message: null
   }
 
+  this.deleteTodoClicked = this.deleteTodoClicked.bind(this);
+  this.refreshTodo = this.refreshTodo.bind(this);
+  this.updateTodo = this.updateTodo.bind(this);
+
+  }
+
+
+  //Lifecycle happens after render, perfect for api calls
+  componentDidMount(){
+
+    this.refreshTodo();
+ 
   }
   render(){
 
@@ -26,6 +35,7 @@ class ListToDOesComponent extends Component{
     <div className={styles.ListToDOesComponent} data-testid="ListToDOesComponent">
     
     <h1>List Todo</h1>
+{   this.state.message && <div>{this.state.message}</div>}
     <table>
       <thread>
         <tr>
@@ -35,6 +45,8 @@ class ListToDOesComponent extends Component{
           <th>description</th>
           <th>target Date</th>
           <th>done?</th>
+          <th>Delete</th>
+          <th>Update</th>
         </tr>
         <tbody>
 
@@ -50,6 +62,9 @@ class ListToDOesComponent extends Component{
               <td>{todo.description}</td>
               <td>{todo.targetDate.toString()}</td>
               <td>{todo.done.toString()}</td>
+              <td><button onClick={() => this.deleteTodoClicked(todo.id)}>Delete</button></td>
+              <td><button onClick={() => this.updateTodo()}>Update</button></td>
+
           </tr>
             )
           }
@@ -60,6 +75,42 @@ class ListToDOesComponent extends Component{
   );
   }
   
+
+  deleteTodoClicked(id){
+    let username = AuthenticationService.getLoggedInUser();
+    // console.log(id + "" + username)
+    TODODataService.deleteToDo(username, id).then(
+      response => {
+        this.setState({message: `Detele todo of ${id}`});
+        this.refreshTodo(); 
+      }
+    )
+  }
+
+  refreshTodo(){
+
+    let username = AuthenticationService.getLoggedInUser();
+    TODODataService.retrieveAllTodos(username).then(
+
+      response => {
+        //console.log(response);
+        this.setState({todo: response.data})
+      }
+    )
+  }
+
+  updateTodo(){
+
+    console.log("refresh TODO")
+    // let username = AuthenticationService.getLoggedInUser();
+    // // console.log(id + "" + username)
+    // TODODataService.deleteToDo(username, id).then(
+    //   response => {
+    //     this.setState({message: `Detele todo of ${id}`});
+    //     this.refreshTodo(); 
+    //   }
+    // )
+  }
   
 }
 

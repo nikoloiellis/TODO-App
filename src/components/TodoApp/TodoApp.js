@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './TodoApp.module.css';
 import Login from '../Login/Login';
+
 import Welcome from '../WelcomeComponent/WelcomeComponent';
 import WitNavigation from '../WitNavigation/WitNavigation';
 import ErrorComponent from '../ErrorComponent/ErrorComponent';
@@ -23,6 +24,7 @@ import AuthenticationService from './AuthenticationService';
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'; 
 import Logout from '../Logout/Logout';
 import { BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
+import TodoComponent from '../TodoComponent/TodoComponent';
 
 
 
@@ -34,6 +36,8 @@ class TodoApp extends Component{
     const LoginComponentWithNavigation = WitNavigation(Login);
     const WelcomeComponentWithParams = WithParamas(Welcome);
     const HeaderComponentWithNavigation = WitNavigation(HeaderComponent)
+
+
     return( <div className={styles.TodoApp} data-testid="TodoApp">
   
     <Router>
@@ -52,8 +56,13 @@ class TodoApp extends Component{
         <Route path='/welcome/:name'element={<AuthenticatedRoute>
           <WelcomeComponentWithParams />
           </AuthenticatedRoute>}/>  
-        <Route path='/logout'element={< Logout  />}/>
+         
+          <Route path='/todo'element={<AuthenticatedRoute>
+            <TodoComponent/>
+          </AuthenticatedRoute>}/> 
 
+
+        <Route path='/logout'element={< Logout  />}/>
         <Route path='*' element={<ErrorComponent/>}></Route>
 
       
@@ -80,7 +89,7 @@ class HeaderComponent extends Component {
         <Container>
           <Navbar.Brand href="#home">TestingNav</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link> <Link to='/welcome/:name' >Home </Link></Nav.Link>
             <Nav.Link href="#features">Todo</Nav.Link>
             <Nav.Link href="#pricing">Welcome</Nav.Link>
         
