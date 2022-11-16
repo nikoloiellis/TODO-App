@@ -63,7 +63,7 @@ class ListToDOesComponent extends Component{
               <td>{todo.targetDate.toString()}</td>
               <td>{todo.done.toString()}</td>
               <td><button onClick={() => this.deleteTodoClicked(todo.id)}>Delete</button></td>
-              <td><button onClick={() => this.updateTodo()}>Update</button></td>
+              <td><button onClick={() => this.updateTodo(todo.id)}>Update</button></td>
 
           </tr>
             )
@@ -99,9 +99,11 @@ class ListToDOesComponent extends Component{
     )
   }
 
-  updateTodo(){
+  updateTodo(id){
 
-    console.log("refresh TODO")
+    console.log("update TODO" + id); 
+    this.props.navigate(`/todo/${id}`);
+    
     // let username = AuthenticationService.getLoggedInUser();
     // // console.log(id + "" + username)
     // TODODataService.deleteToDo(username, id).then(

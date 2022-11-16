@@ -35,7 +35,9 @@ class TodoApp extends Component{
     //A function for navigation however it feels depricated so remember to update this
     const LoginComponentWithNavigation = WitNavigation(Login);
     const WelcomeComponentWithParams = WithParamas(Welcome);
-    const HeaderComponentWithNavigation = WitNavigation(HeaderComponent)
+    const HeaderComponentWithNavigation = WitNavigation(HeaderComponent);
+    const ListTodosComponentWithNavigation = WitNavigation(ListToDOesComponent);
+    const TodoComponentWithNaviagation = WithParamas(TodoComponent);
 
 
     return( <div className={styles.TodoApp} data-testid="TodoApp">
@@ -48,19 +50,20 @@ class TodoApp extends Component{
         {/* <Route path='/login'element={<Login />}/>  */}
         <Route path='/login'element={< LoginComponentWithNavigation  />}/>
 
-        <Route path='/todo'element={
-        <AuthenticatedRoute>
-          < ListToDOesComponent  />
-          </AuthenticatedRoute>
-          }/>
+       
         <Route path='/welcome/:name'element={<AuthenticatedRoute>
           <WelcomeComponentWithParams />
           </AuthenticatedRoute>}/>  
          
           <Route path='/todo'element={<AuthenticatedRoute>
-            <TodoComponent/>
+            <ListTodosComponentWithNavigation/>
           </AuthenticatedRoute>}/> 
 
+          <Route path='/todo/:id'element={
+        <AuthenticatedRoute>
+          < TodoComponentWithNaviagation />
+          </AuthenticatedRoute>
+          }/>
 
         <Route path='/logout'element={< Logout  />}/>
         <Route path='*' element={<ErrorComponent/>}></Route>
@@ -90,7 +93,8 @@ class HeaderComponent extends Component {
           <Navbar.Brand href="#home">TestingNav</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link> <Link to='/welcome/:name' >Home </Link></Nav.Link>
-            <Nav.Link href="#features">Todo</Nav.Link>
+            <Nav.Link> <Link to='/todo' >Todo List</Link></Nav.Link>
+           
             <Nav.Link href="#pricing">Welcome</Nav.Link>
         
           </Nav>

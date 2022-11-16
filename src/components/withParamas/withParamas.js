@@ -5,7 +5,7 @@ import {useParams} from "react-router-dom";
 
 //This is a params function for passing parameters to
 function WithParamas(Component){
-  return props => <Component {...props} params = {useParams} />
+  return props => <Component {...props} params={useParams()} />;
 }
 
 WithParamas.propTypes = {};
