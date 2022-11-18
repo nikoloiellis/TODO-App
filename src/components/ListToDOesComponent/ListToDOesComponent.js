@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import TODODataService from '../../api/TODODataService'; 
 import AuthenticationService from '../TodoApp/AuthenticationService';
 import styles from './ListToDOesComponent.module.css';
-
+import moment from 'moment';
 
 
 class ListToDOesComponent extends Component{
@@ -18,7 +18,7 @@ class ListToDOesComponent extends Component{
   this.deleteTodoClicked = this.deleteTodoClicked.bind(this);
   this.refreshTodo = this.refreshTodo.bind(this);
   this.updateTodo = this.updateTodo.bind(this);
-
+  this.addTodo = this.addTodo.bind(this);
   }
 
 
@@ -60,15 +60,17 @@ class ListToDOesComponent extends Component{
           <tr> 
               <td>{todo.id}</td>
               <td>{todo.description}</td>
-              <td>{todo.targetDate.toString()}</td>
+              <td>{moment(todo.targetDate).format(`YYYY-MM-DD`)}</td>
               <td>{todo.done.toString()}</td>
               <td><button onClick={() => this.deleteTodoClicked(todo.id)}>Delete</button></td>
               <td><button onClick={() => this.updateTodo(todo.id)}>Update</button></td>
-
+              <td><button onClick={() => this.addTodo(todo.id)}>Create</button></td>
           </tr>
+          
             )
           }
         </tbody>
+        
       </thread>
     </table>
   </div>
@@ -112,6 +114,10 @@ class ListToDOesComponent extends Component{
     //     this.refreshTodo(); 
     //   }
     // )
+  }
+
+  addTodo(){
+    this.props.navigate(`/todos/-1`)
   }
   
 }
